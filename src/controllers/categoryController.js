@@ -18,6 +18,7 @@ const getCategoriesByAppId = async (req, res) => {
     if (!categories) {
       categories = await categoryService.getCategoriesByAppId(req.appid);
       await redisService.aset(`categories_${req.appid}`, JSON.stringify(categories));
+    //   await redisService.aexpire(`categories_${req.appid}`, 2)
     }
     return res.status(200).json({
       data: categories
