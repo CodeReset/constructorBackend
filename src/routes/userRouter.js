@@ -3,13 +3,13 @@ import Router from "express";
 import {
   signUpSchema,
   signInSchema,
-} from "../services/user/validationSchemas.js";
-import applicationapi from "../middlewares/applicationapi.js";
-import { signin, signup } from "../controllers/userController.js";
+} from "../services/user/validationSchemas";
+import checkAppId from "../middlewares/checkAppId";
+import { signin, signup } from "../controllers/userController";
 
 const router = new Router();
 
-router.post("/signin", signInSchema, applicationapi, signin);
-router.post("/signup", signUpSchema, applicationapi, signup);
+router.post("/signin", signInSchema, checkAppId, signin);
+router.post("/signup", signUpSchema, checkAppId, signup);
 
 export default router;

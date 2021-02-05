@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { User } from "../../models/models.js";
+import { User } from "../../models";
 
 class UserService {
   async signup(email, name, password, appId) {

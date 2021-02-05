@@ -3,12 +3,11 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import model from "./models/models.js";
 
-import router from "./routes/index.js";
+import router from "./routes";
 
 // DB
-import sequelize from "./stuff/db/index.js";
+import sequelize from "./stuff/db";
 const PORT = process.env.PORT || 5000;
 
 const app = express();

@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 
-import userService from "../services/user/userService.js";
+import userService from "../services/user/userService";
 
 const signup = async (req, res) => {
   try {
