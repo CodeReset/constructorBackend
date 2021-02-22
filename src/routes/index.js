@@ -6,7 +6,7 @@ import categoryRouter from "./categoryRouter";
 
 const router = new Router();
 
-router.use("/auth", userRouter);
+router.use("/user", userRouter);
 router.use("/product", productRouter);
 router.use("/category", categoryRouter);
 
