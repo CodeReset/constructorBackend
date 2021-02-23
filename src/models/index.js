@@ -45,8 +45,7 @@ const Product = sequelize.define('product', {
   description: { type: DataTypes.STRING },
   price: { type: DataTypes.INTEGER },
   img: { type: DataTypes.STRING },
-  options: { type: DataTypes.JSONB },
-  count: { type: DataTypes.INTEGER, defaultValue: 0 }
+  options: { type: DataTypes.JSONB }
 });
 
 const Order = sequelize.define('order', {
@@ -58,7 +57,8 @@ const Order = sequelize.define('order', {
   appId: { type: DataTypes.UUID },
   clientId: { type: DataTypes.UUID },
   status: { type: DataTypes.STRING },
-  time: { type: DataTypes.STRING }
+  products: { type: DataTypes.ARRAY(DataTypes.JSONB) },
+  totalPrice: { type: DataTypes.INTEGER }
 });
 
 export { Order, Product, Category, User, Application };
