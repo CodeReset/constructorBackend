@@ -14,11 +14,11 @@ const getCategoriesByAppId = async (req, res) => {
     }
     //Пробуем брать данные из редиса
     let categories = JSON.parse(await redisService.aget(`categories_${req.appid}`));
-    //Если в редисе нет то берем из БД и кладем в редис
-    if (!categories) {
+    //Если в редисе нет то берем из БД и кладем в редис !!!РЕДИС ОТКЛЮЧИЛ ПОКА
+    if (categories) {
       categories = await categoryService.getCategoriesByAppId(req.appid);
       await redisService.aset(`categories_${req.appid}`, JSON.stringify(categories));
-    //   await redisService.aexpire(`categories_${req.appid}`, 2)
+      //await redisService.aexpire(`categories_${req.appid}`, 2)
     }
     return res.status(200).json({
       data: categories
@@ -31,5 +31,75 @@ const getCategoriesByAppId = async (req, res) => {
   }
 };
 
+const addCategoryFromAdmin = async (req, res) => {
+  try {
+    // ВАЛИДАЦИЯ
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Пожалуйста исправьте все ошибки'
+      });
+    }
+    const { name } = req.body;
+    const data = await categoryService.addCategory(req.appid, name);
+    return res.status(200).json({
+      data
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      message: e
+    });
+  }
+};
 
-export { getCategoriesByAppId };
+const deleteCategoryFromAdmin = async (req, res) => {
+  try {
+    // ВАЛИДАЦИЯ
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Пожалуйста исправьте все ошибки'
+      });
+    }
+    const { id } = req.body;
+    const data = await categoryService.deleteCategoryById(req.appid, id);
+    return res.status(200).json({
+      data
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      message: e
+    });
+  }
+};
+
+const updateCategoryFromAdmin = async (req, res) => {
+  try {
+    // ВАЛИДАЦИЯ
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Пожалуйста исправьте все ошибки'
+      });
+    }
+    const { id, name } = req.body;
+    const newData = { name }; 
+    const data = await categoryService.updateCategoryNameById(req.appid, id, newData);
+    return res.status(200).json({
+      data
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      message: e
+    });
+  }
+};
+
+
+export { getCategoriesByAppId, addCategoryFromAdmin, deleteCategoryFromAdmin, updateCategoryFromAdmin };

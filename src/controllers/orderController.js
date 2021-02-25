@@ -39,4 +39,27 @@ const createOrder = async (req, res) => {
   }
 };
 
-export { createOrder };
+const changeOrderStatus = async (req, res) => {
+  try {
+    // ВАЛИДАЦИЯ
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Пожалуйста исправьте все ошибки'
+      });
+    }
+    const { id, status } = req.body;
+    const data = await ordertService.changeStatusById(id, status);
+    return res.status(200).json({
+        data
+    });
+  } catch (e) {
+      console.log(e)
+    return res.status(500).json({
+      message: e
+    });
+  }
+};
+
+export { createOrder, changeOrderStatus };

@@ -18,6 +18,7 @@ const User = sequelize.define('user', {
   },
   appId: { type: DataTypes.UUID },
   email: { type: DataTypes.STRING },
+  type: { type: DataTypes.STRING },
   password: { type: DataTypes.STRING },
   name: { type: DataTypes.STRING },
   options: { type: DataTypes.JSONB }

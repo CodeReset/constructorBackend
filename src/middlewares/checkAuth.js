@@ -6,7 +6,9 @@ const checkAuthFromToken = (req, res, next) => {
     if (bearerHeader) {
       const bearer = bearerHeader.split(' ');
       const bearerToken = bearer[1];
-      const { userid } = jwt.verify(bearerToken, process.env.JWT_SECRET);
+      let token;
+      req.body.type === 'admin' ? token = process.env.JWT_SECRET_ADMIN : token = process.env.JWT_SECRET;
+      const { userid } = jwt.verify(bearerToken, token);
       if (userid) {
         req.body.userId = userid;
         next();

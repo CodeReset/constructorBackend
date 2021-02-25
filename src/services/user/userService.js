@@ -4,24 +4,31 @@ import jwt from 'jsonwebtoken';
 import { User } from '../../models';
 
 class UserService {
-  async signup(email, name, password, appId) {
-    const candidate = await User.findOne({ where: { email, appId } });
+  async signup(email, name, password, appId, type) {
+    const candidate = await User.findOne({ where: { email, appId, type } });
     if (candidate) {
       return {
         status: 400,
         message: 'Пользователь с такой почтой уже существует'
       };
     }
+    let options = {};
+    if(type === 'admin') {
+      options = {
+        applications: ['14cd0829-3d9b-4934-a1f9-0980d11bf09f'],
+        rate: 'test'
+      }
+    }
     const hashedPassword = await bcrypt.hash(password, 14);
-    await User.create({ email, password: hashedPassword, name, appId });
+    await User.create({ email, password: hashedPassword, type, name, appId, options });
     return {
       status: 201,
       message: 'Поздравляем, вы успешно прошли регистрацию'
     };
   }
 
-  async getProfileById(id) {
-    const user = await User.findOne({ attributes: ['name', 'options', 'email'], where: { id } });
+  async getProfileById(id, type) {
+    const user = await User.findOne({ attributes: ['name', 'options', 'email'], where: { id, type } });
     return user;
   }
 
@@ -38,14 +45,12 @@ class UserService {
         wishlist: [productId]
       }
     }
-    console.log(user)
     const data = await User.update(user, { where: { id } });
-    console.log(data)
     return data;
   }
 
-  async signin(email, password, appId) {
-    const candidate = await User.findOne({ where: { email, appId } });
+  async signin(email, password, appId, type) {
+    const candidate = await User.findOne({ where: { email, appId, type } });
     if (!candidate) {
       return {
         status: 400,
@@ -59,7 +64,9 @@ class UserService {
         message: 'Неправильный логин или пароль'
       };
     }
-    const token = jwt.sign({ userid: candidate.id }, process.env.JWT_SECRET);
+    let token;
+    type === 'admin' ? token = process.env.JWT_SECRET_ADMIN : token = process.env.JWT_SECRET;
+    token = jwt.sign({ userid: candidate.id }, token);
     return {
       status: 200,
       token,

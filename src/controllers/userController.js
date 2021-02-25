@@ -12,17 +12,20 @@ const signup = async (req, res) => {
         message: "Пожалуйста исправьте все ошибки",
       });
     }
-    const { email, name, password } = req.body;
+    const { email, name, password, type } = req.body;
+
     const { status, message } = await userService.signup(
       email,
       name,
       password,
-      req.appid
+      req.appid,
+      type
     );
     return res.status(status).json({
       message,
     });
   } catch (e) {
+    console.log(e)
     return res.status(500).json({
       message: e,
     });
@@ -39,8 +42,8 @@ const getProfile = async (req, res) => {
         message: "Пожалуйста исправьте все ошибки",
       });
     }
-    const { userId } = req.body;
-    const data = await userService.getProfileById(userId);
+    const { userId, type } = req.body;
+    const data = await userService.getProfileById(userId, type);
     return res.status(200).json({
       data,
     });
@@ -84,11 +87,12 @@ const signin = async (req, res) => {
         message: "Пожалуйста исправьте все ошибки",
       });
     }
-    const { email, password } = req.body;
+    const { email, password, type } = req.body;
     const { status, message, token = null } = await userService.signin(
       email,
       password,
-      req.appid
+      req.appid,
+      type
     );
     if (token) {
       return res.status(status).json({
@@ -100,6 +104,7 @@ const signin = async (req, res) => {
       message,
     });
   } catch (e) {
+    console.log(e)
     return res.status(500).json({
       message: e,
     });
