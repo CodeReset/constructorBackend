@@ -7,10 +7,10 @@ const checkAdminRulesUserId = async (req, res, next) => {
     if (!admin.dataValues.options.applications.includes(req.appid))
       return res.status(403).json({ message: 'No rules for this application' });
     next();
-  } catch (err) {
-    console.log(err);
+  } catch (e) {
+    console.log(e);
     res.status(500).json({
-      message: err
+      message: e
     });
   }
 };

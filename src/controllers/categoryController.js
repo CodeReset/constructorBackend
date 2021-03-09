@@ -14,11 +14,12 @@ const getCategoriesByAppId = async (req, res) => {
     }
     //Пробуем брать данные из редиса
     let categories = JSON.parse(await redisService.aget(`categories_${req.appid}`));
-    //Если в редисе нет то берем из БД и кладем в редис !!!РЕДИС ОТКЛЮЧИЛ ПОКА
-    if (categories) {
+    await redisService.aexpire(`categories_${req.appid}`, 2);
+    //Если в редисе нет то берем из БД и кладем в редис 
+    if (!categories) {
       categories = await categoryService.getCategoriesByAppId(req.appid);
       await redisService.aset(`categories_${req.appid}`, JSON.stringify(categories));
-      //await redisService.aexpire(`categories_${req.appid}`, 2)
+      await redisService.aexpire(`categories_${req.appid}`, 2);
     }
     return res.status(200).json({
       data: categories

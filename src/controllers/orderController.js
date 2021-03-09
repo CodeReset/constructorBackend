@@ -62,4 +62,26 @@ const changeOrderStatus = async (req, res) => {
   }
 };
 
-export { createOrder, changeOrderStatus };
+const getOrders = async (req, res) => {
+  try {
+    // ВАЛИДАЦИЯ
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Пожалуйста исправьте все ошибки'
+      });
+    }
+    const data = await ordertService.getOrdersByAppId(req.appid);
+    return res.status(200).json({
+        data
+    });
+  } catch (e) {
+      console.log(e)
+    return res.status(500).json({
+      message: e
+    });
+  }
+};
+
+export { createOrder, changeOrderStatus, getOrders };

@@ -12,6 +12,10 @@ class OrederService {
   async changeStatusById(id, status) {
     return await Order.update({ status }, { where: { id } });
   }
+
+  async getOrdersByAppId(appId) {
+    return await Order.findAll({ where: { appId } });
+  }
 }
 
 export default new OrederService();

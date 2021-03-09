@@ -15,10 +15,12 @@ const getProductsByAppId = async (req, res) => {
     }
     //Пробуем брать данные из редиса
     let products = JSON.parse(await redisService.aget(`products_${req.appid}`));
-    //Если в редисе нет то берем из БД и кладем в редис !!!РЕДИС ОТКЛЮЧИЛ ПОКА
+    await redisService.aexpire(`products_${req.appid}`, 2);
+    //Если в редисе нет то берем из БД и кладем в редис
     if (products) {
       products = await productService.getProductsByAppId(req.appid);
       await redisService.aset(`products_${req.appid}`, JSON.stringify(products));
+      await redisService.aexpire(`products_${req.appid}`, 2);
     }
 
     return res.status(200).json({

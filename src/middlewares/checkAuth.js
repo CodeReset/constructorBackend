@@ -19,10 +19,10 @@ const checkAuthFromToken = (req, res, next) => {
       // Forbidden
       res.sendStatus(403);
     }
-  } catch (err) {
-    console.log(err);
+  } catch (e) {
+    console.log(e);
     res.status(500).json({
-      message: err
+      message: e
     });
   }
 };
