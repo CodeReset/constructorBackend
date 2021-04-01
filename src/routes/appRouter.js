@@ -1,6 +1,14 @@
 import Router from 'express';
 
-import { createApp, getTemlates, getThemes, build } from '../controllers/orderController';
+import {
+  createApp,
+  getTemlates,
+  getThemes,
+  build,
+  updateStructure,
+  getStructure,
+  getApps
+} from '../controllers/orderController';
 import { checkAppId, checkAuth, checkAdmin, checkAdminRules } from '../middlewares';
 
 const router = new Router();
@@ -8,8 +16,9 @@ const router = new Router();
 router.post('/create', checkAdmin, checkAuth, createApp);
 router.post('/getTemlates', checkAdmin, checkAuth, getTemlates);
 router.post('/getThemes', checkAdmin, checkAuth, getThemes);
-router.post('/build', checkAdmin, checkAuth, build);
-// router.post('/changeStatus', checkAppId, checkAdmin, checkAuth, checkAdminRules, changeOrderStatus);
-// router.get('/orders', checkAppId, checkAdmin, checkAuth, checkAdminRules, getOrders);
+router.post('/build', checkAdmin, checkAuth, checkAdminRules, build);
+router.post('/updateStructure', checkAdmin, checkAuth, checkAdminRules, updateStructure);
+router.post('/getStructure', checkAdmin, checkAuth, checkAdminRules, getStructure);
+router.post('/getApps', checkAdmin, checkAuth, checkAdminRules, getApps);
 
 export default router;

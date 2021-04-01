@@ -1,4 +1,4 @@
-import { Application, Temlate, Themes  } from '../../models';
+import { Application, Temlate, Themes } from '../../models';
 
 class ApplicationService {
   async createApplication(name, description, template, theme) {
@@ -11,6 +11,10 @@ class ApplicationService {
 
   async getThemesByTemlate(temlate) {
     return await Themes.findAll({ temlate });
+  }
+
+  async getAppsByIds(ids) {
+    return await Application.findAll({ where: { id: ids } });
   }
 }
 
