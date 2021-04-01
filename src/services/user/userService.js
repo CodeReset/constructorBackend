@@ -49,6 +49,13 @@ class UserService {
     return data;
   }
 
+  async addAppToUser(appId, id) {
+    const user = (await User.findOne({ where: { id } })).dataValues;
+    user.options.applications.push(productId);
+    const data = await User.update(user, { where: { id } });
+    return data;
+  }
+
   async signin(email, password, appId, type) {
     const candidate = await User.findOne({ where: { email, appId, type } });
     if (!candidate) {

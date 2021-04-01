@@ -7,7 +7,36 @@ const Application = sequelize.define('application', {
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4
   },
-  name: { type: DataTypes.STRING }
+  template: { type: DataTypes.STRING },
+  theme: { type: DataTypes.STRING },
+  name: { type: DataTypes.STRING },
+  description: { type: DataTypes.STRING },
+  structure: { type: DataTypes.JSONB }
+});
+
+const Template = sequelize.define('template', {
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4
+  },
+  name: { type: DataTypes.STRING },
+  images: { type: DataTypes.ARRAY },
+  // themes: { type: DataTypes.ARRAY },
+  type: { type: DataTypes.STRING }
+});
+
+const Theme = sequelize.define('theme', {
+  id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4
+  },
+  name: { type: DataTypes.STRING },
+  images: { type: DataTypes.ARRAY },
+  description: { type: DataTypes.STRING },
+  temlate: { type: DataTypes.STRING },
+  colors: { type: DataTypes.ARRAY },
 });
 
 const User = sequelize.define('user', {
@@ -62,5 +91,5 @@ const Order = sequelize.define('order', {
   totalPrice: { type: DataTypes.INTEGER }
 });
 
-export { Order, Product, Category, User, Application };
-export default { Order, Product, Category, User, Application };
+export { Order, Product, Category, User, Application, Template, Theme };
+export default { Order, Product, Category, User, Application, Template, Theme };
