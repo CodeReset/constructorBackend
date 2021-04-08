@@ -76,70 +76,74 @@ const getThemes = async (req, res) => {
 };
 
 const updateStructure = async (req, res) => {
-    try {
-      // ВАЛИДАЦИЯ
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          errors: errors.array(),
-          message: 'Пожалуйста исправьте все ошибки'
-        });
-      }
-      const { id, data } = req.body;
-      await redisService.aset(id, data);
-      return res.status(200);
-    } catch (e) {
-      console.log(e);
-      return res.status(500).json({
-        message: e
+  try {
+    // ВАЛИДАЦИЯ
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Пожалуйста исправьте все ошибки'
       });
     }
-  };
+    const { id, data } = req.body;
+    await redisService.aset(id, data);
+    return res.status(200);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      message: e
+    });
+  }
+};
 
-  const getStructure = async (req, res) => {
-    try {
-      // ВАЛИДАЦИЯ
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          errors: errors.array(),
-          message: 'Пожалуйста исправьте все ошибки'
-        });
-      }
-      const { id } = req.body;
-      const data = await redisService.aget(id);
-      return res.status(200).json({
-        data
-      });
-    } catch (e) {
-      console.log(e);
-      return res.status(500).json({
-        message: e
+const getStructure = async (req, res) => {
+  try {
+    // ВАЛИДАЦИЯ
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Пожалуйста исправьте все ошибки'
       });
     }
-  };
+    const { id } = req.body;
+    const data = await redisService.aget(id);
+    return res.status(200).json({
+      data
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      message: e
+    });
+  }
+};
 
-  const getApps = async (req, res) => {
-    try {
-      // ВАЛИДАЦИЯ
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({
-          errors: errors.array(),
-          message: 'Пожалуйста исправьте все ошибки'
-        });
-      }
-      const { ids } = req.body;
-      const data = await appService.getAppsByIds(ids);
-      return res.status(200).json({
-        data
-      });
-    } catch (e) {
-      console.log(e);
-      return res.status(500).json({
-        message: e
+const getApps = async (req, res) => {
+  try {
+    // ВАЛИДАЦИЯ
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Пожалуйста исправьте все ошибки'
       });
     }
-  };
+    const { ids } = req.body;
+    const data = await appService.getAppsByIds(ids);
+    return res.status(200).json({
+      data
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      message: e
+    });
+  }
+};
 
-export { createApp, getTemlates, getThemes, updateStructure, getStructure, getApps };
+const build = async (req, res) => {
+  return;
+};
+
+export { createApp, getTemlates, getThemes, updateStructure, getStructure, getApps, build };

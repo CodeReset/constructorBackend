@@ -8,7 +8,7 @@ import {
   updateStructure,
   getStructure,
   getApps
-} from '../controllers/orderController';
+} from '../controllers/appController';
 import { checkAppId, checkAuth, checkAdmin, checkAdminRules } from '../middlewares';
 
 const router = new Router();

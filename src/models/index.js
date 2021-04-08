@@ -21,7 +21,7 @@ const Template = sequelize.define('template', {
     defaultValue: DataTypes.UUIDV4
   },
   name: { type: DataTypes.STRING },
-  images: { type: DataTypes.ARRAY },
+  images: { type: DataTypes.ARRAY(DataTypes.STRING) },
   // themes: { type: DataTypes.ARRAY },
   type: { type: DataTypes.STRING }
 });
@@ -33,10 +33,10 @@ const Theme = sequelize.define('theme', {
     defaultValue: DataTypes.UUIDV4
   },
   name: { type: DataTypes.STRING },
-  images: { type: DataTypes.ARRAY },
+  images: { type: DataTypes.ARRAY(DataTypes.STRING) },
   description: { type: DataTypes.STRING },
   temlate: { type: DataTypes.STRING },
-  colors: { type: DataTypes.ARRAY },
+  colors: { type: DataTypes.ARRAY(DataTypes.STRING) }
 });
 
 const User = sequelize.define('user', {
