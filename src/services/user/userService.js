@@ -51,7 +51,7 @@ class UserService {
 
   async addAppToUser(appId, id) {
     const user = (await User.findOne({ where: { id } })).dataValues;
-    user.options.applications.push(productId);
+    user.options.applications.push(appId);
     const data = await User.update(user, { where: { id } });
     return data;
   }

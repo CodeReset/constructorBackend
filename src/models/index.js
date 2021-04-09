@@ -22,6 +22,8 @@ const Template = sequelize.define('template', {
   },
   name: { type: DataTypes.STRING },
   images: { type: DataTypes.ARRAY(DataTypes.STRING) },
+  components: { type: DataTypes.ARRAY(DataTypes.JSONB) },
+  pages: { type: DataTypes.ARRAY(DataTypes.JSONB) },
   // themes: { type: DataTypes.ARRAY },
   type: { type: DataTypes.STRING }
 });

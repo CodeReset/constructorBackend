@@ -1,6 +1,6 @@
 import { validationResult } from 'express-validator';
 import redisService from '../stuff/redis';
-import appService from '../services/order/ordertService';
+import appService from '../services/application/applicationService';
 import userService from '../services/user/userService';
 
 const createApp = async (req, res) => {
@@ -13,13 +13,13 @@ const createApp = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
-    const { userId, name, description, template, theme } = req.body;
+    const { userId, name, description, templateId, themeId } = req.body;
     //Создаем приложение в БД
-    const application = await appService.createApplication(name, description, template, theme);
+    const application = await appService.createApplication(name, description, templateId, themeId);
     //Добавляем appId в опции пользователя
-    const data = await userService.addAppToUser(application.id, userId);
+    await userService.addAppToUser(application.id, userId);
     return res.status(200).json({
-      data
+      data: application
     });
   } catch (e) {
     console.log(e);
@@ -85,32 +85,9 @@ const updateStructure = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
-    const { id, data } = req.body;
-    await redisService.aset(id, data);
-    return res.status(200);
-  } catch (e) {
-    console.log(e);
-    return res.status(500).json({
-      message: e
-    });
-  }
-};
-
-const getStructure = async (req, res) => {
-  try {
-    // ВАЛИДАЦИЯ
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        errors: errors.array(),
-        message: 'Пожалуйста исправьте все ошибки'
-      });
-    }
-    const { id } = req.body;
-    const data = await redisService.aget(id);
-    return res.status(200).json({
-      data
-    });
+    const { appId, data } = req.body;
+    await redisService.aset(appId, JSON.stringify(data));
+    return res.sendStatus(200);
   } catch (e) {
     console.log(e);
     return res.status(500).json({
@@ -142,8 +119,66 @@ const getApps = async (req, res) => {
   }
 };
 
+const getPages = async (req, res) => {
+  try {
+    // ВАЛИДАЦИЯ
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Пожалуйста исправьте все ошибки'
+      });
+    } 
+    const { appId, templateId } = req.body;
+    let data = JSON.parse(await redisService.aget(appId)) ;
+    if(!data) {
+      data = await appService.getAppPages(templateId);
+    }
+    return res.status(200).json({
+      data
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      message: e
+    });
+  }
+};
+
+const getComponent = async (req, res) => {
+  try {
+    // ВАЛИДАЦИЯ
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        errors: errors.array(),
+        message: 'Пожалуйста исправьте все ошибки'
+      });
+    }
+    const { appId, templateId, name, page } = req.body;
+    const data = await appService.getAppComponent(templateId, name, page);
+    return res.status(200).json({
+      data
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      message: e
+    });
+  }
+};
+
 const build = async (req, res) => {
   return;
 };
 
-export { createApp, getTemlates, getThemes, updateStructure, getStructure, getApps, build };
+export {
+  createApp,
+  getTemlates,
+  getThemes,
+  updateStructure,
+  getApps,
+  build,
+  getPages,
+  getComponent
+};

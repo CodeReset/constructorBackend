@@ -1,4 +1,4 @@
-import { Application, Temlate, Themes } from '../../models';
+import { Application, Template, Themes } from '../../models';
 
 class ApplicationService {
   async createApplication(name, description, template, theme) {
@@ -6,7 +6,7 @@ class ApplicationService {
   }
 
   async getTemlatesByAppType(type) {
-    return await Temlate.findAll({ type });
+    return await Template.findAll({ type });
   }
 
   async getThemesByTemlate(temlate) {
@@ -15,6 +15,14 @@ class ApplicationService {
 
   async getAppsByIds(ids) {
     return await Application.findAll({ where: { id: ids } });
+  }
+
+  async getAppPages(id) {
+    return await Template.findOne({ attributes: ['pages'], where: { id } });
+  }
+  async getAppComponent(id, name, page) {
+    const { dataValues } = await Template.findOne({ attributes: ['components'], where: { id } });
+    return dataValues.components.filter((component) => component.name === name && component.page === page);
   }
 }
 

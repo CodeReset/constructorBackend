@@ -5,6 +5,7 @@ const checkAdminTypeFromBody = (req, res, next) => {
         message: 'You are not admin'
       });
     }
+    if(req.body.appId) req.appid = req.body.appId;
     next();
   } catch (e) {
     console.log(e);

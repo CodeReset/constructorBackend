@@ -6,8 +6,9 @@ import {
   getThemes,
   build,
   updateStructure,
-  getStructure,
-  getApps
+  getApps,
+  getPages,
+  getComponent
 } from '../controllers/appController';
 import { checkAppId, checkAuth, checkAdmin, checkAdminRules } from '../middlewares';
 
@@ -18,7 +19,8 @@ router.post('/getTemlates', checkAdmin, checkAuth, getTemlates);
 router.post('/getThemes', checkAdmin, checkAuth, getThemes);
 router.post('/build', checkAdmin, checkAuth, checkAdminRules, build);
 router.post('/updateStructure', checkAdmin, checkAuth, checkAdminRules, updateStructure);
-router.post('/getStructure', checkAdmin, checkAuth, checkAdminRules, getStructure);
 router.post('/getApps', checkAdmin, checkAuth, checkAdminRules, getApps);
+router.post('/getPages', checkAdmin, checkAuth, checkAdminRules, getPages);
+router.post('/getComponent', checkAdmin, checkAuth, checkAdminRules, getComponent);
 
 export default router;
