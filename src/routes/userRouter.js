@@ -8,7 +8,7 @@ const router = new Router();
 
 router.post('/profile', checkAppId, checkAuth, checkUserType, getProfile);
 router.post('/wishlist', checkAppId, checkAuth, checkUserType, addToWishList);
-router.post('/signin', signInSchema, checkAppId, checkUserType, signin);
-router.post('/signup', signUpSchema, checkAppId, checkUserType, signup);
+router.post('/signin', signInSchema, checkUserType, checkAppId, signin);
+router.post('/signup', signUpSchema, checkUserType, checkAppId, signup);
 
 export default router;
