@@ -5,7 +5,7 @@ import { redisConnect } from '../../../config/redis';
 
 class RedisService {
   constructor() {
-    this.client = redis.createClient(redisConnect);
+    if(!process.env.FRONT_DEV) this.client = redis.createClient(redisConnect);
   }
 
   async aexists(key) {

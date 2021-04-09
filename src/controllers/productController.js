@@ -13,8 +13,15 @@ const getProductsByAppId = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
+    let products;
+    if (process.env.FRONT_DEV) {
+      products = await productService.getProductsByAppId(req.appid);
+      return res.status(200).json({
+        data: products
+      });
+    }
     //Пробуем брать данные из редиса
-    let products = JSON.parse(await redisService.aget(`products_${req.appid}`));
+    products = JSON.parse(await redisService.aget(`products_${req.appid}`));
     await redisService.aexpire(`products_${req.appid}`, 2);
     //Если в редисе нет то берем из БД и кладем в редис
     if (products) {
@@ -22,7 +29,7 @@ const getProductsByAppId = async (req, res) => {
       await redisService.aset(`products_${req.appid}`, JSON.stringify(products));
       await redisService.aexpire(`products_${req.appid}`, 2);
     }
-
+    products = await productService.getProductsByAppId(req.appid);
     return res.status(200).json({
       data: products
     });

@@ -1,6 +1,6 @@
-import { validationResult } from "express-validator";
-import redisService from '../stuff/redis'
-import categoryService from "../services/category/categoryService";
+import { validationResult } from 'express-validator';
+import redisService from '../stuff/redis';
+import categoryService from '../services/category/categoryService';
 
 const getCategoriesByAppId = async (req, res) => {
   try {
@@ -12,10 +12,17 @@ const getCategoriesByAppId = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
+    let categories;
+    if (process.env.FRONT_DEV) {
+      categories = await productService.getProductsByAppId(req.appid);
+      return res.status(200).json({
+        data: categories
+      });
+    }
     //Пробуем брать данные из редиса
-    let categories = JSON.parse(await redisService.aget(`categories_${req.appid}`));
+    categories = JSON.parse(await redisService.aget(`categories_${req.appid}`));
     await redisService.aexpire(`categories_${req.appid}`, 2);
-    //Если в редисе нет то берем из БД и кладем в редис 
+    //Если в редисе нет то берем из БД и кладем в редис
     if (!categories) {
       categories = await categoryService.getCategoriesByAppId(req.appid);
       await redisService.aset(`categories_${req.appid}`, JSON.stringify(categories));
@@ -89,7 +96,7 @@ const updateCategoryFromAdmin = async (req, res) => {
       });
     }
     const { id, name } = req.body;
-    const newData = { name }; 
+    const newData = { name };
     const data = await categoryService.updateCategoryNameById(req.appid, id, newData);
     return res.status(200).json({
       data
@@ -102,5 +109,9 @@ const updateCategoryFromAdmin = async (req, res) => {
   }
 };
 
-
-export { getCategoriesByAppId, addCategoryFromAdmin, deleteCategoryFromAdmin, updateCategoryFromAdmin };
+export {
+  getCategoriesByAppId,
+  addCategoryFromAdmin,
+  deleteCategoryFromAdmin,
+  updateCategoryFromAdmin
+};
