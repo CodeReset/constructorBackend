@@ -6,8 +6,8 @@ import { signin, signup, getProfile, addToWishList } from '../controllers/userCo
 
 const router = new Router();
 
-router.post('/profile', checkAppId, checkAuth, checkUserType, getProfile);
-router.post('/wishlist', checkAppId, checkAuth, checkUserType, addToWishList);
+router.post('/profile', checkAuth, checkUserType, getProfile);
+router.post('/wishlist' , checkAuth, checkUserType, addToWishList);
 router.post('/signin', signInSchema, checkUserType, checkAppId, signin);
 router.post('/signup', signUpSchema, checkUserType, checkAppId, signup);
 
