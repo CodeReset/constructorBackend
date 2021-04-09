@@ -3,7 +3,6 @@ const checkUserTypeFromBody = (req, res, next) => {
     if (!req.body.type === 'admin') {
       req.body.type = 'common';
     } else {
-      if(req.appId)
       if (!req.headers.appidentificator)
         req.headers.appidentificator = '00000000-0000-0000-0000-000000000000';
     }
