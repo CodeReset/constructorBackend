@@ -33,9 +33,9 @@ router.patch('/update', checkAppId, checkAdmin, checkAuth, checkAdminRules, upda
 router.post(
   '/uploadImage',
   checkAppId,
-//   checkAdmin,
-//   checkAuth,
-//   checkAdminRules,
+  //   checkAdmin,
+  //   checkAuth,
+  //   checkAdminRules,
   upload.single('file'),
   uploadProductImageFromAdmin
 );
