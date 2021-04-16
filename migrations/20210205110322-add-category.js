@@ -8,6 +8,8 @@ module.exports = {
       },
       appId: { type: Sequelize.UUID },
       name: { type: Sequelize.STRING },
+      img: { type: Sequelize.STRING },
+      status: { type: Sequelize.STRING },
       createdAt: { type: Sequelize.DATEONLY, allowNull: false, defaultValue: Sequelize.NOW },
       updatedAt: { type: Sequelize.DATEONLY, allowNull: false, defaultValue: Sequelize.NOW }
     });
