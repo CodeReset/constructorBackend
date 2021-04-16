@@ -49,8 +49,8 @@ const addCategoryFromAdmin = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
-    const { name, img } = req.body;
-    const data = await categoryService.addCategory(req.appid, name, img);
+    const { name, img, status } = req.body;
+    const data = await categoryService.addCategory(req.appid, name, img, status);
     return res.status(200).json({
       data
     });
