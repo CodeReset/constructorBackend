@@ -20,8 +20,8 @@ class UploadService {
       if (!existsSync(`${process.cwd()}/public/${req.appid}`)) {
         await fsp.mkdir(`${process.cwd()}/public/${req.appid}`);
       }
-      const newPath = `public/${req.appid}/${req.file.filename}.${req.file.originalname.split('.').pop()}`;
-      await fsp.rename(req.file.path, `${process.cwd()}/${newPath}`);
+      const newPath = `${req.appid}/${req.file.filename}.${req.file.originalname.split('.').pop()}`;
+      await fsp.rename(req.file.path, `${process.cwd()}/public/${newPath}`);
       return { status: 200, data: { file_path: newPath } };
     } catch (err) {
       await this.destroyFile(req.file.path);
