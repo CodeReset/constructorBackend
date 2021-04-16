@@ -32,7 +32,6 @@ router.patch('/update', checkAppId, checkAdmin, checkAuth, checkAdminRules, upda
 //Роуты для работы с загрузкой фотографий для продуктов
 router.post(
   '/uploadImage',
-  checkAppId,
 //   checkAdmin,
 //   checkAuth,
 //   checkAdminRules,
@@ -41,11 +40,9 @@ router.post(
 );
 router.post(
   '/deleteImage',
-  checkAppId,
   checkAdmin,
   checkAuth,
   checkAdminRules,
-  upload.single('file'),
   deleteProductImageFromAdmin
 );
 
