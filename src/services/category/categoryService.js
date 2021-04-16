@@ -5,8 +5,8 @@ class CategoryService {
     return await Category.findAll({ where: { appId } });
   }
 
-  async addCategory(appId, name) {
-    return await Category.create({ name, appId });
+  async addCategory(appId, name, img) {
+    return await Category.create({ name, appId, img, status: 'active' });
   }
 
   async deleteCategoryById(appId, id) {
@@ -14,7 +14,7 @@ class CategoryService {
   }
 
   async updateCategoryNameById(appId, id, data) {
-    return await Category.update(data, { where: { id, appId } });;
+    return await Category.update(data, { where: { id, appId } });
   }
 }
 

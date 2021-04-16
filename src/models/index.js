@@ -62,7 +62,9 @@ const Category = sequelize.define('category', {
     defaultValue: DataTypes.UUIDV4
   },
   appId: { type: DataTypes.UUID },
-  name: { type: DataTypes.STRING }
+  name: { type: DataTypes.STRING },
+  status: { type: DataTypes.STRING },
+  img: { type: DataTypes.STRING }
 });
 
 const Product = sequelize.define('product', {

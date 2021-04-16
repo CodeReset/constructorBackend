@@ -14,7 +14,7 @@ const getCategoriesByAppId = async (req, res) => {
     }
     let categories;
     if (process.env.FRONT_DEV) {
-      categories = await productService.getProductsByAppId(req.appid);
+      categories = await categoryService.getCategoriesByAppId(req.appid);
       return res.status(200).json({
         data: categories
       });
@@ -49,8 +49,8 @@ const addCategoryFromAdmin = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
-    const { name } = req.body;
-    const data = await categoryService.addCategory(req.appid, name);
+    const { name, img } = req.body;
+    const data = await categoryService.addCategory(req.appid, name, img);
     return res.status(200).json({
       data
     });
@@ -95,8 +95,8 @@ const updateCategoryFromAdmin = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
-    const { id, name } = req.body;
-    const newData = { name };
+    const { id, name, img, status } = req.body;
+    const newData = { name, img, status };
     const data = await categoryService.updateCategoryNameById(req.appid, id, newData);
     return res.status(200).json({
       data
