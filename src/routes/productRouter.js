@@ -19,14 +19,7 @@ const router = new Router();
 router.post('/getProductsByAppId', checkAppId, getProductsByAppId);
 router.post('/getProductsByIds', checkAppId, getProductsByIds);
 router.post('/add', checkAppId, checkAdmin, checkAuth, checkAdminRules, addProductFromAdmin);
-router.delete(
-  '/delete',
-  checkAppId,
-  checkAdmin,
-  checkAuth,
-  checkAdminRules,
-  deleteProductFromAdmin
-);
+router.post('/delete', checkAppId, checkAdmin, checkAuth, checkAdminRules, deleteProductFromAdmin);
 router.patch('/update', checkAppId, checkAdmin, checkAuth, checkAdminRules, updateProductFromAdmin);
 
 //Роуты для работы с загрузкой фотографий для продуктов

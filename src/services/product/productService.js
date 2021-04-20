@@ -1,4 +1,4 @@
-import { Product } from "../../models";
+import { Product } from '../../models';
 
 class ProductService {
   async getProductsByAppId(appId) {
@@ -12,8 +12,17 @@ class ProductService {
     });
   }
 
-  async addProduct(appId, categoryId, name, description, price, img, options = {}) {
-    return await Product.create({ appId, categoryId, name, description, price, img, options });
+  async addProduct(appId, categoryId, name, description, price, img, status, options = {}) {
+    return await Product.create({
+      appId,
+      categoryId,
+      name,
+      description,
+      price,
+      img,
+      options,
+      status
+    });
   }
 
   async deleteProductById(appId, id) {

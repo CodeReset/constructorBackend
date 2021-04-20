@@ -14,6 +14,7 @@ module.exports = {
       description: { type: Sequelize.STRING },
       price: { type: Sequelize.INTEGER },
       img: { type: Sequelize.STRING },
+      status: { type: Sequelize.STRING },
       options: { type: Sequelize.JSONB },
       count: { type: Sequelize.INTEGER, defaultValue: 0 },
       createdAt: { type: Sequelize.DATEONLY, allowNull: false, defaultValue: Sequelize.NOW },

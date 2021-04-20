@@ -75,14 +75,15 @@ const addProductFromAdmin = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
-    const { categoryId, name, description, price, img } = req.body;
+    const { categoryId, name, description, price, img, status } = req.body;
     const data = await productService.addProduct(
       req.appid,
       categoryId,
       name,
       description,
       price,
-      img
+      img,
+      status
     );
 
     return res.status(200).json({
@@ -130,8 +131,8 @@ const updateProductFromAdmin = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
-    const { id, categoryId, name, description, price, img } = req.body;
-    const newData = { categoryId, name, description, price, img };
+    const { id, categoryId, name, description, price, img, status } = req.body;
+    const newData = { categoryId, name, description, price, img, status };
     const data = await productService.updateProductById(req.appid, id, newData);
 
     return res.status(200).json({

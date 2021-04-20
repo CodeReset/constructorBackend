@@ -79,6 +79,7 @@ const Product = sequelize.define('product', {
   description: { type: DataTypes.STRING },
   price: { type: DataTypes.INTEGER },
   img: { type: DataTypes.STRING },
+  status: { type: DataTypes.STRING },
   options: { type: DataTypes.JSONB }
 });
 

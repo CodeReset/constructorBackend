@@ -12,6 +12,7 @@ module.exports = {
           name: 'Sake-make',
           description: 'Sake-make',
           price: 1000,
+          status: 'active',
           img: 'https://img.delo-vcusa.ru/2016/02/Rolly-s-semgoy-Syake-maki.jpg',
           createdAt: new Date(),
           updatedAt: new Date()
@@ -23,6 +24,7 @@ module.exports = {
           name: 'Киото маки',
           description: 'Киото маки',
           price: 1000,
+          status: 'active',
           img: 'https://img.delo-vcusa.ru/2016/02/Rolly-s-semgoy-Syake-maki.jpg',
           createdAt: '2016-04-25 14:35:06.269-10',
           updatedAt: '2016-04-25 14:35:06.269-10'
@@ -34,6 +36,7 @@ module.exports = {
           name: 'Тайский суп том-ям',
           description: 'Тайский суп том-ям',
           price: 1000,
+          status: 'active',
           img: 'https://img.delo-vcusa.ru/2016/02/Rolly-s-semgoy-Syake-maki.jpg',
           createdAt: '2016-04-25 14:35:06.269-10',
           updatedAt: '2016-04-25 14:35:06.269-10'
@@ -45,6 +48,7 @@ module.exports = {
           name: 'Экзотик маки',
           description: 'Экзотик маки',
           price: 1000,
+          status: 'active',
           img: 'https://img.delo-vcusa.ru/2016/02/Rolly-s-semgoy-Syake-maki.jpg',
           createdAt: '2016-04-25 14:35:06.269-10',
           updatedAt: '2016-04-25 14:35:06.269-10'
@@ -56,6 +60,7 @@ module.exports = {
           name: 'Ролл с острым лососем',
           description: 'Sake-make',
           price: 1000,
+          status: 'active',
           img: 'https://img.delo-vcusa.ru/2016/02/Rolly-s-semgoy-Syake-maki.jpg',
           createdAt: '2016-04-25 14:35:06.269-10',
           updatedAt: '2016-04-25 14:35:06.269-10'
@@ -70,7 +75,7 @@ module.exports = {
       { name: 'Киото маки' },
       { name: 'Тайский суп том-ям' },
       { name: 'Экзотик маки' },
-      { name: 'Ролл с острым лососем' },
+      { name: 'Ролл с острым лососем' }
     ]);
   }
 };
