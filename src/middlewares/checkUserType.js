@@ -1,6 +1,6 @@
 const checkUserTypeFromBody = (req, res, next) => {
   try {
-    if (!req.body.type === 'admin') {
+    if (req.body.type !== 'admin') {
       req.body.type = 'common';
     } else {
       if (!req.headers.appidentificator)

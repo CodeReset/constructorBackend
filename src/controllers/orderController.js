@@ -24,15 +24,16 @@ const createOrder = async (req, res) => {
     //Добавляем к каждому объекту товара еще и поле count для подсчета общей цены
     fullProductsList.forEach((product) => {
       products.forEach((oldProduct) => {
-        if (oldProduct.id === product.id) Object.assign(product.dataValues, { count: oldProduct.count });
+        if (oldProduct.id === product.id)
+          Object.assign(product.dataValues, { count: oldProduct.count });
       });
     });
     const data = await ordertService.createOrder(req.appid, userId, fullProductsList);
     return res.status(200).json({
-        data
+      data
     });
   } catch (e) {
-      console.log(e)
+    console.log(e);
     return res.status(500).json({
       message: e
     });
@@ -52,10 +53,10 @@ const changeOrderStatus = async (req, res) => {
     const { id, status } = req.body;
     const data = await ordertService.changeStatusById(id, status);
     return res.status(200).json({
-        data
+      data
     });
   } catch (e) {
-      console.log(e)
+    console.log(e);
     return res.status(500).json({
       message: e
     });
@@ -74,10 +75,10 @@ const getOrders = async (req, res) => {
     }
     const data = await ordertService.getOrdersByAppId(req.appid);
     return res.status(200).json({
-        data
+      data
     });
   } catch (e) {
-      console.log(e)
+    console.log(e);
     return res.status(500).json({
       message: e
     });
