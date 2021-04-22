@@ -2,7 +2,10 @@ import { Product } from '../../models';
 
 class ProductService {
   async getProductsByAppId(appId, status = 'active', filter = {}) {
-    return await Product.findAll({ where: { appId, status, ...filter } });
+    return await Product.findAll({
+      where: { appId, status, ...filter },
+      order: [['createdAt', 'DESC']]
+    });
   }
 
   async getProductsByIds(appId, ids) {
