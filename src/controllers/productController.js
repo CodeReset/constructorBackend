@@ -17,11 +17,11 @@ const getProductsByAppId = async (req, res) => {
     }
     let { status } = req.body;
     if (status === 'all') {
-      status = ['active', 'hidden'];
+      status = ['active', 'inactive'];
     }
     let products;
     let ids = [];
-    const categories = await categoryService.getCategoriesByAppId(req.appid, 'hidden');
+    const categories = await categoryService.getCategoriesByAppId(req.appid, 'inactive');
     ids = categories.map((item) => {
       return item.id;
     });

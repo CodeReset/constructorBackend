@@ -15,7 +15,7 @@ const getCategoriesByAppId = async (req, res) => {
     let categories;
     let { status } = req.body;
     if (status === 'all') {
-      status = ['active', 'hidden'];
+      status = ['active', 'inactive'];
     }
     if (process.env.FRONT_DEV) {
       categories = await categoryService.getCategoriesByAppId(req.appid, status);
