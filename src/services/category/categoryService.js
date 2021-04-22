@@ -1,8 +1,11 @@
 import { Category } from '../../models';
 
 class CategoryService {
-  async getCategoriesByAppId(appId) {
-    return await Category.findAll({ where: { appId }, order: [['createdAt', 'DESC']] });
+  async getCategoriesByAppId(appId, status = 'active') {
+    return await Category.findAll({
+      where: { appId, status },
+      order: [['createdAt', 'DESC']]
+    });
   }
 
   async addCategory(appId, name, img, status) {

@@ -1,12 +1,22 @@
 import { Order } from '../../models';
 
 class OrederService {
-  async createOrder(appId, clientId, products) {
+  async createOrder(appId, clientId, products, paymentMethod, address) {
     let totalPrice = 0;
     products.forEach((product) => {
       totalPrice += product.dataValues.price * product.dataValues.count;
     });
-    return await Order.create({ appId, clientId, status: 'inProcess', products, totalPrice });
+    let status;
+    paymentMethod === 'online' ? (status = 'waiting') : (status = 'inProcess');
+    return await Order.create({
+      appId,
+      clientId,
+      status,
+      products,
+      totalPrice,
+      paymentMethod,
+      address
+    });
   }
 
   async changeStatusById(id, status) {

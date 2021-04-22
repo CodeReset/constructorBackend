@@ -13,8 +13,12 @@ const getCategoriesByAppId = async (req, res) => {
       });
     }
     let categories;
+    let { status } = req.body;
+    if (status === 'all') {
+      status = ['active', 'hidden'];
+    }
     if (process.env.FRONT_DEV) {
-      categories = await categoryService.getCategoriesByAppId(req.appid);
+      categories = await categoryService.getCategoriesByAppId(req.appid, status);
       return res.status(200).json({
         data: categories
       });
@@ -24,8 +28,8 @@ const getCategoriesByAppId = async (req, res) => {
     await redisService.aexpire(`categories_${req.appid}`, 2);
     //Если в редисе нет то берем из БД и кладем в редис
     if (!categories) {
-      categories = await categoryService.getCategoriesByAppId(req.appid);
-      await redisService.aset(`categories_${req.appid}`, JSON.stringify(categories));
+      categories = await categoryService.getCategoriesByAppId(req.appid, status);
+      await redisService.aset(`categories_${req.appid}`, JSON.stringify(categories, status));
       await redisService.aexpire(`categories_${req.appid}`, 2);
     }
     return res.status(200).json({

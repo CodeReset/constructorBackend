@@ -93,7 +93,9 @@ const Order = sequelize.define('order', {
   clientId: { type: DataTypes.UUID },
   status: { type: DataTypes.STRING },
   products: { type: DataTypes.ARRAY(DataTypes.JSONB) },
-  totalPrice: { type: DataTypes.INTEGER }
+  totalPrice: { type: DataTypes.INTEGER },
+  paymentMethod: { type: DataTypes.STRING },
+  address: { type: DataTypes.STRING },
 });
 
 export { Order, Product, Category, User, Application, Template, Theme };

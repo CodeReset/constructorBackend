@@ -2,3 +2,5 @@ sequelize-cli db:migrate:undo:all
 sequelize-cli db:migrate
 sequelize-cli db:seed:undo:all
 sequelize-cli db:seed:all
+///
+sequelize db:seed --seed 20210205092148-add_some_product.js

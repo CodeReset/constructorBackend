@@ -32,6 +32,11 @@ class UserService {
     return user;
   }
 
+  async changeProfileById(id, type, options) {
+    const user = await User.update( options, { where: { id, type } });
+    return user;
+  }
+
   async addProductToWishList(productId, id) {
     const user = (await User.findOne({ where: { id } })).dataValues;
     if(user.options){

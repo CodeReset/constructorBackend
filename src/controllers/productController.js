@@ -2,6 +2,8 @@ import { validationResult } from 'express-validator';
 import redisService from '../stuff/redis';
 import uploadService from '../stuff/uploader';
 import productService from '../services/product/productService';
+import categoryService from '../services/category/categoryService';
+import { Op } from 'sequelize';
 
 const getProductsByAppId = async (req, res) => {
   try {
@@ -13,9 +15,20 @@ const getProductsByAppId = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
+    let { status } = req.body;
+    if (status === 'all') {
+      status = ['active', 'hidden'];
+    }
     let products;
+    let ids = [];
+    const categories = await categoryService.getCategoriesByAppId(req.appid, 'hidden');
+    ids = categories.map((item) => {
+      return item.id;
+    });
     if (process.env.FRONT_DEV) {
-      products = await productService.getProductsByAppId(req.appid);
+      products = await productService.getProductsByAppId(req.appid, status, {
+        id: { [Op.notIn]: ids }
+      });
       return res.status(200).json({
         data: products
       });
@@ -25,11 +38,15 @@ const getProductsByAppId = async (req, res) => {
     await redisService.aexpire(`products_${req.appid}`, 2);
     //Если в редисе нет то берем из БД и кладем в редис
     if (products) {
-      products = await productService.getProductsByAppId(req.appid);
+      products = await productService.getProductsByAppId(req.appid, status, {
+        id: { [Op.notIn]: ids }
+      });
       await redisService.aset(`products_${req.appid}`, JSON.stringify(products));
       await redisService.aexpire(`products_${req.appid}`, 2);
     }
-    products = await productService.getProductsByAppId(req.appid);
+    products = await productService.getProductsByAppId(req.appid, status, {
+      id: { [Op.notIn]: ids }
+    });
     return res.status(200).json({
       data: products
     });

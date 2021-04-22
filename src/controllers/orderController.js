@@ -13,7 +13,7 @@ const createOrder = async (req, res) => {
         message: 'Пожалуйста исправьте все ошибки'
       });
     }
-    const { userId, products } = req.body;
+    const { userId, products, paymentMethod, address } = req.body;
     //Создаем массив с айдишниками товаров
     const productIds = [];
     products.forEach((product) => {
@@ -28,7 +28,7 @@ const createOrder = async (req, res) => {
           Object.assign(product.dataValues, { count: oldProduct.count });
       });
     });
-    const data = await ordertService.createOrder(req.appid, userId, fullProductsList);
+    const data = await ordertService.createOrder(req.appid, userId, fullProductsList, paymentMethod, address);
     return res.status(200).json({
       data
     });
