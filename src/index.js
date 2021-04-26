@@ -5,6 +5,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import router from './routes';
+import WebSocketService from './stuff/websocket'
+
+//Start web-socket service
+WebSocketService.start()
 
 // DB
 import sequelize from './stuff/db';
