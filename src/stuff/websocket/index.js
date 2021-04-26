@@ -18,9 +18,8 @@ class WebSocketService {
       });
     });
   }
-  async sendMessage(id) {
-    console.log(id)
-    socket.to(id).emit('push_message', { text: '123' });
+  async sendMessage(id, data) {
+    socket.to(id).emit('push_message', data);
   }
   get connection() {
     return socket;
